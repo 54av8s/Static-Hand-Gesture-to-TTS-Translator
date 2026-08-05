@@ -8,3 +8,11 @@ A capstone engineering project that utilizes Google's MediaPipe, OpenCV, and Sci
 5. Scikit-learn 1.9.0
 
 Ensure environment is isolated for all files 
+
+# As final product
+1. Live motion detection instead of static
+2. eSpeakNG as backend for pyttsx3
+3. Optimization for faster prediction
+4. TTS optimization for callout speeds
+5. Headless mode to offload processes
+6. Project migration
