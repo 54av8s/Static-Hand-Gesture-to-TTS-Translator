@@ -11,8 +11,9 @@ Ensure environment is isolated for all files
 
 # As final product
 1. Live motion detection instead of static
-2. eSpeakNG as backend for pyttsx3
-3. Optimization for faster prediction
-4. TTS optimization for callout speeds
-5. Headless mode to offload processes
-6. Project migration
+2. WLASL for vocab dictionaries in English
+3. eSpeakNG as backend for pyttsx3
+4. Optimization for faster prediction
+5. TTS optimization for callout speeds
+6. Headless mode to offload processes
+7. Project migration
