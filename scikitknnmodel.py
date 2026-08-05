@@ -3,6 +3,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 import joblib
 
+print(f"pandas version: {pd.__version__}")  # Print the version of pandas
+print(f"scikit-learn version: {__import__('sklearn').__version__}")  # Print the version of scikit-learn
 data = pd.read_csv("gesture_data.csv", header=None)
 X = data.iloc[:, 1:]  # Features (normalized coordinates)
 Y = data.iloc[:, 0]   # Labels (gestures)
