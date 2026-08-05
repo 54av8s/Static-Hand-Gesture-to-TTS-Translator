@@ -16,4 +16,4 @@ Ensure environment is isolated for all files
 4. Optimization for faster prediction
 5. TTS optimization for callout speeds
 6. Headless mode to offload processes
-7. Project migration
+7. Project migration to Raspberry Pi strictly to avoid rewriting in other languages such as C++
