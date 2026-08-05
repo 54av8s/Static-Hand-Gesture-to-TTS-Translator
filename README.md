@@ -1,4 +1,4 @@
-# Static-Hand-Gesture-Detection
+# Static-Hand-Gesture-to-TTS-Translator
 A capstone engineering project that utilizes Google's MediaPipe, OpenCV, and Scikit-learn pipeline for predictive gesture callouts. 
 # Requirements
 1. Python 3.12.10 
