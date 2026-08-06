@@ -98,7 +98,7 @@ try:
                 say(prediction)
                 last_spoken = prediction  # Update last_spoken variable
 
-except KeyboardInterrupt: # ctrl + c to exit
+except KeyboardInterrupt: # ctrl + c to exit loop
     print("KeyboardInterrupt received. Exiting...")
 cap.release()
 
