@@ -82,7 +82,7 @@ try:
     while True:
         ret, frame = cap.read()
         frame = ov.flip(frame, 1) # Mirrors video
-        resized_frame = ov.resize(frame, (640, 480))
+        resized_frame = ov.resize(frame, (640, 480)) # changed to 640x480 to reduce lag and improve performance
         rgb_frame = ov.cvtColor(resized_frame, ov.COLOR_BGR2RGB)
         results = hands.process(rgb_frame)
 
