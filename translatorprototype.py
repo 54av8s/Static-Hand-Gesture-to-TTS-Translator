@@ -12,6 +12,8 @@ import threading
 import warnings
 import time
 import statistics
+import espeakng
+import subprocess # espeakng settings
 
 # Version checks for the libraries used in this project :3
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -68,8 +70,6 @@ def save_sample(normalized_row, label):
         writer.writerow([label]+ list(normalized_row))
   
 
-
-
 # setting up the camera
 model = joblib.load("gesture_knn_model.pkl")  # Load the trained model
 cap = ov.VideoCapture(0)
@@ -77,15 +77,18 @@ last_spoken = None  # Initialize last_spoken variable
 speech_queue = queue.Queue()  # Queue for speech synthesis
 
 def _tts_worker():
-    pythoncom.CoInitialize()
-    speaker = win32com.client.Dispatch("SAPI.SpVoice")
+    process = subprocess.Popen(
+        ["espeak-ng", "-s", "175"],
+        stdin=subprocess.PIPE,
+        text=True
+    )
     while True:
         text = speech_queue.get()
-        speaker.Speak(text)
+        process.stdin.write(text + "\n")
+        process.stdin.flush()
 
 threading.Thread(target=_tts_worker, daemon=True).start()
-        
-def say(text):
+def speak(text):
     while not speech_queue.empty():
          try:
              speech_queue.get_nowait()
@@ -104,7 +107,7 @@ last_spoken_time = time.time()  # Initialize last spoken time
 # Empty intervals list to store the time intervals between TTS callouts
 intervals = []
 
-
+# camera loop
 while True:
     ret, frame = cap.read()
     frame = ov.flip(frame, 1) # Mirrors video
@@ -130,7 +133,7 @@ while True:
                 print(f"Time since last callout: {gap: .2f} seconds")
                 print(f"TTS about to speak: '{prediction}'")
                 last_spoken_time = now  # Update last spoken time
-                say(prediction)
+                speak(prediction)
             last_spoken = prediction  # Update last_spoken variable
 
             # Stats for interval analysis
