@@ -103,4 +103,4 @@ except KeyboardInterrupt:
     print("KeyboardInterrupt received. Exiting...")
 cap.release()
 
-# Shortened code for easy readability and understanding of the code. The code is now more organized and easier to follow, with clear comments explaining each section.
+# Shortened code for easy readability, however it might grow longer as more features are added. The code is structured to be modular and maintainable, allowing for easy updates and enhancements in the future.
