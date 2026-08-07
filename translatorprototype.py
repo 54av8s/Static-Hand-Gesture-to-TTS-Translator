@@ -10,8 +10,10 @@ import queue
 import pythoncom
 import threading
 import warnings
-import pyttsx3 
+import time
+import statistics
 
+# Version checks for the libraries used in this project
 warnings.filterwarnings("ignore", category=UserWarning)
 print(sys.executable)
 print(f"CURRENT MP VERSION: {mp.__version__}")
@@ -19,7 +21,7 @@ print(f"CURRENT PYTHON VERSION AS .VENV: {sys.version}")    # Checking versions 
 print(f"CURRENT OPENCV VERSION: {ov.__version__}")
 print("RUNNING CORRECT FILE - VERSION CHECK 1")
 
-# Importing MediaPipe and assigning standard parameters for accuracy and reliability
+# Importing MediaPipe and assigning standard parameters
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(
     static_image_mode = False,
@@ -92,6 +94,17 @@ def say(text):
     speech_queue.put(text)
 
 
+# Buffer to store last 30 frames refer to function 
+from collections import deque
+frame_buffer = deque(maxlen=30)  # Buffer to store the last 30 frames
+
+# Elapsed time tracking between TTS callouts
+last_spoken_time = time.time()  # Initialize last spoken time
+
+# Empty intervals list to store the time intervals between TTS callouts
+intervals = []
+
+
 while True:
     ret, frame = cap.read()
     frame = ov.flip(frame, 1) # Mirrors video
@@ -106,12 +119,31 @@ while True:
             h, w, _ = resized_frame.shape
           
             normalized = normalize(landmarks)
+            frame_buffer.append(normalized)  # Add the normalized data to the buffer
             prediction = model.predict([normalized])[0]
 
+            # Script to count intervals between speech
             if prediction != last_spoken:
+                now = time.time()
+                gap = now - last_spoken_time
+                intervals.append(gap)  # Store the interval
+                print(f"Time since last callout: {gap: .2f} seconds")
                 print(f"TTS about to speak: '{prediction}'")
+                last_spoken_time = now  # Update last spoken time
                 say(prediction)
             last_spoken = prediction  # Update last_spoken variable
+
+            # Stats for interval analysis
+            if intervals:
+                print(f"Average: {statistics.mean(intervals):.2f} seconds")
+                print(f"Median: {statistics.median(intervals):.2f} seconds")
+                if len (intervals) >=2:
+                    print(f"Standard deviation: {statistics.stdev(intervals):.2f} seconds")
+                else: 
+                    print("Standard deviation: N/A (not enough data points)")
+            else:
+                print("No intervals yet")
+    
 
             handedness = results.multi_handedness[hand_index].classification[0].label
             for landmark_id, label in joints:
@@ -123,7 +155,6 @@ while True:
                 ov.putText(resized_frame, label, (x+5, y), labelfont, 1, (0, 255, 0), 2)
             y_offset = 30 + (hand_index * 30)
             ov.putText(resized_frame, f"{handedness}: {prediction}", (10, y_offset), labelfont, 1, (255, 255, 255), 2)
-
                 
     ov.imshow("Feed", resized_frame)
     key = ov.waitKey(1) & 0xFF
