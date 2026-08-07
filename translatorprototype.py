@@ -13,7 +13,7 @@ import warnings
 import time
 import statistics
 
-# Version checks for the libraries used in this project
+# Version checks for the libraries used in this project :3
 warnings.filterwarnings("ignore", category=UserWarning)
 print(sys.executable)
 print(f"CURRENT MP VERSION: {mp.__version__}")
