@@ -82,7 +82,7 @@ try:
     while True:
         ret, frame = cap.read()
         frame = ov.flip(frame, 1) # Mirrors video
-        resized_frame = ov.resize(frame, (640, 480)) # changed to 640x480 to reduce lag and improve performance
+        resized_frame = ov.resize(frame, (640, 480))
         rgb_frame = ov.cvtColor(resized_frame, ov.COLOR_BGR2RGB)
         results = hands.process(rgb_frame)
 
@@ -97,8 +97,10 @@ try:
                 print(f"TTS about to speak: '{prediction}'")
                 say(prediction)
                 last_spoken = prediction  # Update last_spoken variable
-
-except KeyboardInterrupt: # ctrl + c to exit loop
+                
+# ctrl + c to exit
+except KeyboardInterrupt: 
     print("KeyboardInterrupt received. Exiting...")
 cap.release()
 
+# Shortened code for easy readability and understanding of the code. The code is now more organized and easier to follow, with clear comments explaining each section.
