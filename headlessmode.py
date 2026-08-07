@@ -11,6 +11,12 @@ import pythoncom
 import threading
 import warnings
 import pyttsx3 
+import espeakng
+import subprocess
+import time 
+import statistics
+import collections
+
 
 warnings.filterwarnings("ignore", category=UserWarning)
 print(sys.executable)
@@ -60,22 +66,35 @@ speech_queue = queue.Queue()  # Queue for speech synthesis
 
 # TTS worker thread
 def _tts_worker():
-    pythoncom.CoInitialize()
-    speaker = win32com.client.Dispatch("SAPI.SpVoice")
+    process = subprocess.Popen(
+        ["espeak-ng", "-s", "175"],
+        stdin=subprocess.PIPE,
+        text=True
+    )
     while True:
         text = speech_queue.get()
-        speaker.Speak(text)
+        process.stdin.write(text + "\n")
+        process.stdin.flush()
 
 threading.Thread(target=_tts_worker, daemon=True).start()
-
-# TTS queueing function
-def say(text):
+def speak(text):
     while not speech_queue.empty():
          try:
              speech_queue.get_nowait()
          except queue.Empty:
              break
     speech_queue.put(text)
+
+# Buffer to store last 30 frames refer to function 
+from collections import deque
+frame_buffer = deque(maxlen=30)  # Buffer to store the last 30 frames
+
+# Elapsed time tracking between TTS callouts
+last_spoken_time = time.time()  # Initialize last spoken time
+
+# Empty intervals list to store the time intervals between TTS callouts
+intervals = []
+
 
 # Camera loop
 try:
@@ -95,7 +114,7 @@ try:
 
             if prediction != last_spoken:
                 print(f"TTS about to speak: '{prediction}'")
-                say(prediction)
+                speak(prediction)
                 last_spoken = prediction  # Update last_spoken variable
                 
 # ctrl + c to exit
