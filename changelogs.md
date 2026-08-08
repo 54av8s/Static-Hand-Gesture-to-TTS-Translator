@@ -1,5 +1,5 @@
 # This changelogs.md file is an extension of the README.docx in Google Drive 
-# test
+
 # (8/08)
 1. Added changelogs.md file and corrected filing errors
 
