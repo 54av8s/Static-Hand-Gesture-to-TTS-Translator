@@ -1,5 +1,5 @@
 # Static-Hand-Gesture-to-TTS-Translator
-An ongoing major school project that involves sign language to TTS tools for Deaf and Hard-of-Hearing students.
+An ongoing major school project that involves sign language to TTS tools for Deaf and Hard-of-Hearing students (DHH).
 # Requirements
 1. Python 3.12.10 
 2. MediaPipe 0.10.14
