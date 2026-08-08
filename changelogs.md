@@ -7,6 +7,7 @@
 1. Added frame buffer for future LSTM research
 2. Synced some changes from translatorprototype.py with headlessmode.py including TTS delay fixes 
 3. Added eSpeak NG TTS to both branches
+4. Uninstalled pyttsx3 from .venv
 4. Updated requirementsheadless.txt 
 
 ## (8/06)
