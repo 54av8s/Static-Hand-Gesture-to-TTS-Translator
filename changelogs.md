@@ -1,6 +1,6 @@
 # NOTE: Applicable to all branches
 
-#(8/09)
+# (8/09)
 Added changelogs.md file 
 
 # (8/07)
