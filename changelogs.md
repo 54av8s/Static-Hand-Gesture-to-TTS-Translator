@@ -1,5 +1,8 @@
 # NOTE: Applicable to all branches
 
+#(8/09)
+Added changelogs.md file 
+
 # (8/07)
 Added frame buffer for future LSTM research and TTS timing interval with average, median, and stdev calculations for trial-and-error 
 Fixed stdev causing feed crashes
