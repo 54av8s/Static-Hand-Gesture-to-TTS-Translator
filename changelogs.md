@@ -1,7 +1,7 @@
 # Local changelogs file (only until oldest log related to this branch)
 
 ## (8/08)
-1. Added dedicated changelogs for this experimental branch (global changelogs will be kept)
+1. Added dedicated changelogs for this branch (global changelogs will be kept)
 
 ## (8/07)
 1. Added frame buffer for future LSTM research and TTS timing interval with average, median, and stdev calculations for trial-and-error 
