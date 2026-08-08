@@ -1,4 +1,5 @@
-# This changelogs.md file is an extension of the changelogs from the main branch, i think i'll organize change logs based on file instead of a general one :3
+# This changelogs.md file is an extension of the changelogs from the main branch
+i think i wanna organize change logs based on changes made to that file
 
 # (8/08)
 1. Added changelogs.md file and corrected filing errors
