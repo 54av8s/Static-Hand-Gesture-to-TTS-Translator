@@ -1,7 +1,7 @@
 # Local changelogs file (only until oldest log related to this branch)
 
 ### (8/10)
-1. Added .venv for this branch
+1. Added gitignore parameters
 
 ### (8/08)
 1. Added dedicated changelogs for this experimental branch (global changelogs will be kept)
