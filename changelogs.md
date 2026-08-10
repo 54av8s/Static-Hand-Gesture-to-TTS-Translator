@@ -1,5 +1,8 @@
 # Local changelogs file (only until oldest log related to this branch)
 
+## (8/10)
+1. Added .venv for this branch
+
 ## (8/08)
 1. Added dedicated changelogs for this branch (global changelogs will be kept)
 
