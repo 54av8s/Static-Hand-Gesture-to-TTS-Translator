@@ -1,5 +1,5 @@
-# About this branch
-An experimental version of the main codebase meant to maximize performance on Raspberry Pi models with limited power. This version drops the feed window and labelling functions entirely due to its cost to efficiency. Minor revisions include shorter code (its not like its gonna stay this short lol), downsized resolutions, and a new script to terminate the camera loop. Further benchmarking is required to accurately determine Raspberry Pi's performance under real-world conditions :3
+# Description
+Pushing experimental code from translatorprototype since final translator won't be needing a feed window i think
 
  **Both versions now support eSpeak NG TTS**
 
