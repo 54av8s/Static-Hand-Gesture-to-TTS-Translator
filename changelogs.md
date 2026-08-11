@@ -1,4 +1,5 @@
 # Local changelogs file (only until oldest log related to this branch)
+format MM/DD
 
 ### (8/10)
 1. Added gitignore parameters
