@@ -5,15 +5,14 @@ import cv2 as ov  # Importing OpenCV/CV2 as ov, also giving it a variable to be 
 import numpy as npy # Importing NumPy as npy, also assigning it a variable that can easily be understood in the code
 import csv # Importing CSV to save data in a CSV file
 import joblib # From scikitknnmodel.py, importing joblib to load the trained model for gesture recognition
-import win32com.client # TTS function in place for pyttsx3 
 import queue   
-import pythoncom
 import threading
 import warnings
 import time
 import statistics
 import espeakng
 import subprocess # espeakng settings
+import os
 
 # Version checks for the libraries used in this project :3
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -60,6 +59,16 @@ def normalize(landmarks):
                 
             return coords.flatten()
 
+sequence_labels = {
+    'z': "Wave" # Press Z to save 30 frames of that gesture
+}
+
+os.makedirs("sequences", exist_ok=True)
+
+def save_sequence(buffer,label):
+    sequence_array = npy.array(buffer)
+    npy.save(f"sequences/{label}_{int(time.time())}.npy", sequence_array)
+    print(f"Saved sequence for: {label}")
 
 from gesturedictionary import gesture_labels  # Importing the gesture labels from the gesture dictionary file
 
@@ -72,10 +81,10 @@ def save_sample(normalized_row, label):
 
 # setting up the camera
 model = joblib.load("gesture_knn_model.pkl")  # Load the trained model
-cap = ov.VideoCapture(0)
+cap = ov.VideoCapture(1)
 last_spoken = None  # Initialize last_spoken variable
 speech_queue = queue.Queue()  # Queue for speech synthesis
-
+  # Event to signal stopping the TTS thread
 def _tts_worker():
     process = subprocess.Popen(
         ["espeak-ng", "-s", "175"],
@@ -95,7 +104,7 @@ def speak(text):
          except queue.Empty:
              break
     speech_queue.put(text)
-
+stop_event = threading.Event()
 
 # Buffer to store last 30 frames refer to function 
 from collections import deque
@@ -111,7 +120,7 @@ intervals = []
 while True:
     ret, frame = cap.read()
     frame = ov.flip(frame, 1) # Mirrors video
-    resized_frame = ov.resize(frame, (1100, 720))
+    resized_frame = ov.resize(frame, (640, 480))
     rgb_frame = ov.cvtColor(resized_frame, ov.COLOR_BGR2RGB)
     results = hands.process(rgb_frame)
     normalized = None  # Initialize normalized variable
@@ -123,10 +132,14 @@ while True:
           
             normalized = normalize(landmarks)
             frame_buffer.append(normalized)  # Add the normalized data to the buffer
-            prediction = model.predict([normalized])[0]
-
-            # Script to count intervals between speech
-            if prediction != last_spoken:
+            probs = model.predict_proba([normalized])[0]
+            confidence = max(probs)
+            if confidence < 0.6:
+                prediction = "Unknown"
+            else:
+                prediction = model.classes_[probs.argmax()]    
+            if prediction is not None and prediction != last_spoken:    
+            # Script to count intervals between speech | EXPERIMENTAL
                 now = time.time()
                 gap = now - last_spoken_time
                 intervals.append(gap)  # Store the interval
@@ -136,7 +149,7 @@ while True:
                 speak(prediction)
             last_spoken = prediction  # Update last_spoken variable
 
-            # Stats for interval analysis
+            # Stats for interval analysis | EXPERIMENTAL
             if intervals:
                 print(f"Average: {statistics.mean(intervals):.2f} seconds")
                 print(f"Median: {statistics.median(intervals):.2f} seconds")
@@ -166,6 +179,10 @@ while True:
     elif normalized is not None and chr(key) in gesture_labels:
         save_sample(normalized, gesture_labels[chr(key)])
         print(f"Saved sample for: {gesture_labels[chr(key)]}")
+
+    stop_event.set()  # Signal the TTS thread to stop
+    while not speech_queue.empty():
+        speech_queue.get_nowait()
 
 cap.release()
 ov.destroyAllWindows()
