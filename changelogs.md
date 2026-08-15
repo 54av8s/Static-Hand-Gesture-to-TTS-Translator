@@ -1,6 +1,10 @@
 # Local changelogs file (only until oldest log related to this branch)
 format in MM//DD
 
+### (8/15)
+1. Added script to stop TTS when feed window is closed (still needs debugging)
+2. Added callout "unknown" when prediction does not meet confidence level 
+
 ### (8/10)
 1. Added gitignore parameters 
 
