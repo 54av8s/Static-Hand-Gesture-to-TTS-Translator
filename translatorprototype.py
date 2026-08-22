@@ -79,22 +79,24 @@ def save_sample(normalized_row, label):
         writer.writerow([label]+ list(normalized_row))
   
 
-# setting up the camera
+# setting up TTS
 model = joblib.load("gesture_knn_model.pkl")  # Load the trained model
-cap = ov.VideoCapture(1)
+cap = ov.VideoCapture(0)
+tts_process = None
 last_spoken = None  # Initialize last_spoken variable
 speech_queue = queue.Queue()  # Queue for speech synthesis
   # Event to signal stopping the TTS thread
 def _tts_worker():
-    process = subprocess.Popen(
+    global tts_process
+    tts_process = subprocess.Popen(
         ["espeak-ng", "-s", "175"],
         stdin=subprocess.PIPE,
         text=True
     )
     while True:
         text = speech_queue.get()
-        process.stdin.write(text + "\n")
-        process.stdin.flush()
+        tts_process.stdin.write(text + "\n")
+        tts_process.stdin.flush()
 
 threading.Thread(target=_tts_worker, daemon=True).start()
 def speak(text):
@@ -186,3 +188,5 @@ while True:
 
 cap.release()
 ov.destroyAllWindows()
+if tts_process is not None:
+    tts_process.terminate()
