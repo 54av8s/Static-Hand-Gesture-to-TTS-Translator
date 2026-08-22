@@ -1,5 +1,7 @@
 # Local changelogs file (only until oldest log related to this branch)
 format in MM//DD
+### (8/22)
+1. Fixed TTS still speaking after closing feed window, changes also applied to the other branch
 
 ### (8/15)
 1. Added script to stop TTS when feed window is closed (still needs debugging)
