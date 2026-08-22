@@ -5,12 +5,9 @@ import cv2 as ov  # Importing OpenCV/CV2 as ov, also giving it a variable to be 
 import numpy as npy # Importing NumPy as npy, also assigning it a variable that can easily be understood in the code
 import csv # Importing CSV to save data in a CSV file
 import joblib # From scikitknnmodel.py, importing joblib to load the trained model for gesture recognition
-import win32com.client # TTS function in place for pyttsx3 
 import queue   
-import pythoncom
 import threading
 import warnings
-import pyttsx3 
 import espeakng
 import subprocess
 import time 
@@ -61,20 +58,22 @@ def save_sample(normalized_row, label):
 # setting up TTS
 model = joblib.load("gesture_knn_model.pkl")  # Load the trained model
 cap = ov.VideoCapture(0)
+tts_process = None
 last_spoken = None  # Initialize last_spoken variable
 speech_queue = queue.Queue()  # Queue for speech synthesis
 
 # TTS worker thread
 def _tts_worker():
-    process = subprocess.Popen(
+    global tts_process
+    tts_process = subprocess.Popen(
         ["espeak-ng", "-s", "175"],
         stdin=subprocess.PIPE,
         text=True
     )
     while True:
         text = speech_queue.get()
-        process.stdin.write(text + "\n")
-        process.stdin.flush()
+        tts_process.stdin.write(text + "\n")
+        tts_process.stdin.flush()
 
 threading.Thread(target=_tts_worker, daemon=True).start()
 def speak(text):
@@ -87,7 +86,7 @@ def speak(text):
 
 # Buffer to store last 30 frames refer to function 
 from collections import deque
-frame_buffer = deque(maxlen=30)  # Buffer to store the last 30 frames
+frame_buffer = deque(maxlen=30)  # Buffer to store the last 30 framesS
 
 # Elapsed time tracking between TTS callouts
 last_spoken_time = time.time()  # Initialize last spoken time
@@ -121,5 +120,7 @@ try:
 except KeyboardInterrupt: 
     print("KeyboardInterrupt received. Exiting...")
 cap.release()
+if tts_process is not None:
+    tts_process.terminate()
 
 # Shortened code for easy readability, however it might grow longer as more features are added. The code is structured to be modular and maintainable, allowing for easy updates and enhancements in the future.
