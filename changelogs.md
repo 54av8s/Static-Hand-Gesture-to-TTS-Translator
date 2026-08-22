@@ -1,5 +1,7 @@
 # Local changelogs file (only until oldest log related to this branch)
 format MM/DD
+### (8/22)
+1. Adopted changes from translatorprototype.py to stop TTS from speaking after closing camera window
 
 ### (8/10)
 1. Added gitignore parameters
