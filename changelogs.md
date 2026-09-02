@@ -1,5 +1,9 @@
-# Local changelogs file (only until oldest log related to this branch)
+# Changelogs for headless-mode
 format MM/DD
+
+### (9/02)
+1. Added .json
+
 ### (8/22)
 1. Adopted changes from translatorprototype.py to stop TTS from speaking after closing camera window
 
