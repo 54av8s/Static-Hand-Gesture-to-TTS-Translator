@@ -177,6 +177,7 @@ while True:
     ov.imshow("Feed", resized_frame)
     key = ov.waitKey(1) & 0xFF
     if key == ord('x'):
+        print("Closing...")
         break
     elif normalized is not None and chr(key) in gesture_labels:
         save_sample(normalized, gesture_labels[chr(key)])
