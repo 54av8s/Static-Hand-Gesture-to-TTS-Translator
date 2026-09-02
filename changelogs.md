@@ -3,6 +3,7 @@ format in MM//DD
 
 ### (9/02)
 1. Added .json 
+2. Added a simple "closing" print when you press X to close the camera
 
 ### (8/22)
 1. Fixed TTS still speaking after closing feed window, changes also applied to the other branch
