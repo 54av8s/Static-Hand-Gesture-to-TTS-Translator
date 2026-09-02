@@ -1,5 +1,9 @@
-# Local changelogs file (only until oldest log related to this branch)
+# Changelogs for main
 format in MM//DD
+
+### (9/02)
+1. Added .json 
+
 ### (8/22)
 1. Fixed TTS still speaking after closing feed window, changes also applied to the other branch
 
