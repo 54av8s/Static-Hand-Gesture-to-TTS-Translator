@@ -1,6 +1,9 @@
 # Changelogs for headless-mode
 format MM/DD
 
+### (9/05)
+1. New description
+
 ### (9/02)
 1. Added .json
 
