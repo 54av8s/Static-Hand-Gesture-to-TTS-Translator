@@ -1,4 +1,4 @@
 ﻿.venv/
-.venv-lstm/
+lstm-research/.venv-lstm/
 __pycache__/
 *.pyc
