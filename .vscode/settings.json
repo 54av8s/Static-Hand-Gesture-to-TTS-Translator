@@ -1,4 +1,4 @@
 // translator-repo/.vscode/settings.json
 {
-    "python.defaultInterpreterPath": "./.venv/Scripts/python.exe"
+    "python.defaultInterpreterPath": "./.venv-lstm/Scripts/python.exe"
 }
