@@ -8,7 +8,6 @@ __pycache__/
 data/sequences/
 *.npy
 data/raw_videos/*
-!data/raw_videos/.gitkeep
 *.mp4
 *.mov
 *.avi
