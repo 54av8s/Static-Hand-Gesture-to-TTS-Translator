@@ -1,4 +1,17 @@
-﻿.venv/
-.venv-lstm/
+﻿# Virtual environment
+.venv/
 __pycache__/
 *.pyc
+.vscode/
+
+# Datasets 
+data/sequences/
+*.npy
+data/raw_videos/
+*.mp4
+*.mov
+*.avi
+
+# Other artifacts
+.DS_Store
+Thumbs.db
