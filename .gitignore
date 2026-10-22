@@ -7,7 +7,7 @@ __pycache__/
 # Datasets 
 data/sequences/
 *.npy
-data/raw_videos/*
+data/raw_videos/
 *.mp4
 *.mov
 *.avi
