@@ -8,6 +8,7 @@ __pycache__/
 data/sequences/
 *.npy
 data/raw_videos/
+data/test_videos/
 *.mp4
 *.mov
 *.avi

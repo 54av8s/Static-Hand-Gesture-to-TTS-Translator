@@ -1,8 +1,8 @@
-# For validation only
+# ---------LIST OF APPROVED LABELS FOR SEQUENCE-------------------------
 sequence_labels = {
-        "Wave",
-        "Come here",
-        "More",
-        "Help"
+         "I-love-PCU",
+         "Heart",
+         "Me-or-I",
+         "Okay"
 }
 
